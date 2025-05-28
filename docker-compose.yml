@@ -1,0 +1,16 @@
+services:
+  dev-ui:
+    build:
+      context: app
+      target: dev
+    volumes:
+      - ./app:/opt/botbuilder/app
+  dev-server:
+    build:
+      context: server
+      target: dev
+    volumes:
+      - ./server:/opt/botbuilder/server
+      - ./app/build:/opt/botbuilder/server/public
+    ports:
+      - "3000:3000"

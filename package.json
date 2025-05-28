@@ -4,7 +4,9 @@
   "description": "A step tracking, bot building, tactics game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf app/build server/build",
+    "start-dev": "docker compose up dev-ui dev-server"
   },
   "repository": {
     "type": "git",

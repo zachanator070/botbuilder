@@ -1,0 +1,24 @@
+{
+  "name": "botbuilder-server",
+  "version": "1.0.0",
+  "description": "API and asset server for botbuilder app",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node build/index.js",
+    "start-dev": "nodemon --watch src -e ts --exec \"npm run build && npm run start\""
+  },
+  "author": "zachanator070",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/morgan": "^1.9.9",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.3"
+  }
+}

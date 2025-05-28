@@ -1,0 +1,25 @@
+{
+  "name": "botbuilder-app",
+  "version": "1.0.0",
+  "description": "UI for the botbuilder app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-base": "mkdir -p build && cp src/index.html build/index.html && esbuild src/index.tsx --bundle --outfile=build/index.js --loader:.html=file",
+    "build-dev": "npm run build-base -- --sourcemap",
+    "build": "npm run build-base -- --minify",
+    "start-dev": "nodemon -e tsx,ts,html,css --watch src --exec \"npm run build-dev\"",
+    "start": "npm run build"
+  },
+  "author": "zachanator070",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "esbuild": "^0.25.5",
+    "nodemon": "^3.1.10",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.3"
+  }
+}

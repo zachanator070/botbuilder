@@ -4,13 +4,19 @@ services:
       context: app
       target: dev
     volumes:
+      - ui-node-modules:/opt/botbuilder/app/node_modules
       - ./app:/opt/botbuilder/app
   dev-server:
     build:
       context: server
       target: dev
     volumes:
+      - server-node-modules:/opt/botbuilder/server/node_modules
       - ./server:/opt/botbuilder/server
       - ./app/build:/opt/botbuilder/server/public
+      - ./assets:/opt/botbuilder/assets
     ports:
       - "3000:3000"
+volumes:
+  ui-node-modules:
+  server-node-modules:

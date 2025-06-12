@@ -19,6 +19,17 @@ services:
       - ./assets:/opt/botbuilder/assets
     ports:
       - "3000:3000"
+  prod-ui:
+    build:
+      context: app
+      target: prod
+    volumes:
+      - ./app:/opt/botbuilder/app
+      - ./server/public:/opt/botbuilder/app/build
+  prod-server:
+    build:
+      context: server
+      target: prod
 volumes:
   ui-node-modules:
   server-node-modules:

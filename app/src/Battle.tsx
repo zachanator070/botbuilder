@@ -6,7 +6,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js";
 
 function initThree(canvas: HTMLCanvasElement): void {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 1000 );
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.set(100, 100, 0);
     camera.lookAt(new Vector3(0, 0, 0));
 
@@ -45,47 +45,45 @@ function initThree(canvas: HTMLCanvasElement): void {
     const clock = new THREE.Clock();
 
     let bodyModel: Object3D;
-    let bodyMesh: Object3D | undefined;
 
     const loader = new GLTFLoader();
-    loader.load('/body.glb', (gltf) => {
-        bodyModel = gltf.scene;
-        bodyModel.traverse((object) => {
-            object.castShadow = true;
-        });
-
-        scene.add(bodyModel);
-
-        bodyMesh = bodyModel.getObjectByName('Cube');
-
-        const bodyMixer = new THREE.AnimationMixer(bodyModel);
-        mixers.push(bodyMixer);
-        bodyMixer.clipAction(gltf.animations[0]).play();
-
-        loader.load('/head.glb', (gltf) => {
-            const headModel = gltf.scene;
-            headModel.traverse((object) => {
+    const loadingPromise = new Promise<void>((resolve, reject) => {
+        loader.load('/body.glb', (gltf) => {
+            bodyModel = gltf.scene;
+            bodyModel.traverse((object) => {
                 object.castShadow = true;
             });
-            if (bodyMesh) {
-                bodyModel.add(headModel);
-            }
 
-            const neck = bodyModel.getObjectByName('neck');
-            if(neck) {
-                headModel.position.set(neck?.position.x, neck?.position.y, neck?.position.z);
-            }
+            scene.add(bodyModel);
 
-            const headMixer = new THREE.AnimationMixer(headModel);
-            mixers.push(headMixer);
-            // headMixer.clipAction(gltf.animations[0]).play();
+            const bodyMixer = new THREE.AnimationMixer(bodyModel);
+            mixers.push(bodyMixer);
+            bodyMixer.clipAction(gltf.animations[0]).play();
 
+            loader.load('/head.glb', (gltf) => {
+                const headModel = gltf.scene;
+                headModel.traverse((object) => {
+                    object.castShadow = true;
+                });
+
+                const neck = bodyModel.getObjectByName('neck');
+                if(neck) {
+                    neck.add(headModel);
+                }
+
+                const headMixer = new THREE.AnimationMixer(headModel);
+                mixers.push(headMixer);
+                headMixer.clipAction(gltf.animations[0]).play();
+
+                resolve();
+            });
         });
     });
 
+
     const renderer = new THREE.WebGLRenderer({canvas});
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(canvas.width, canvas.height);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
@@ -108,13 +106,13 @@ function initThree(canvas: HTMLCanvasElement): void {
         }
         renderer.render( scene, camera );
     }
-    renderer.setAnimationLoop( animate );
+    loadingPromise.then(() => {
+        renderer.setAnimationLoop( animate );
+    });
 }
 
 export default function Battle() {
     return <canvas
-        width={window.innerWidth}
-        height={window.innerHeight}
         ref={(node: HTMLCanvasElement | null) => {
             if (node) {
                 initThree(node);

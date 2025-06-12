@@ -9,6 +9,7 @@ export default function App(): React.ReactElement {
         <BrowserRouter>
             <Routes>
                 <Route path="*" element={<MainMenu />} />
+                <Route path="/ui" element={<MainMenu />} />
                 <Route path="/ui/run" element={<RunMap/>} />
                 <Route path="/ui/battle" element={<Battle/>} />
             </Routes>

@@ -7,8 +7,8 @@ function main() {
     app.get('/', (req, res) => {
         res.redirect('/ui');
     });
-    app.use(express.static('public', {}));
-    app.use(express.static('../assets'));
+    app.use(express.static('public'));
+    app.use(express.static('assets'));
     app.get('/ui', (req, res) => {
         res.sendFile('public/index.html', { root: '/opt/botbuilder/server/' });
     });

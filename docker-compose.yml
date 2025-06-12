@@ -24,7 +24,6 @@ services:
       context: app
       target: prod
     volumes:
-      - ./app:/opt/botbuilder/app
       - ./server/public:/opt/botbuilder/app/build
   prod-server:
     build:

@@ -1,11 +1,12 @@
-FROM node:24.1 as base
+FROM node:24.1 AS base
 WORKDIR /opt/botbuilder/app
 ADD package.json .
 ADD package-lock.json .
+ADD src ./src
 RUN npm ci
 
-FROM base as dev
+FROM base AS dev
 CMD ["npm", "run", "start-dev"]
 
-FROM base as prod
+FROM base AS prod
 CMD ["npm", "run", "start"]

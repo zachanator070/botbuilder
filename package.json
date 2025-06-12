@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf app/build server/build",
-    "start-dev": "docker compose up dev-ui dev-server"
+    "start-dev": "docker compose up dev-ui dev-server",
+    "build": "docker compose run prod-ui && docker compose build prod-server",
+    "publish": "docker tag botbuilder-prod-server zachanator070/botbuilder:latest && docker push zachanator070/botbuilder:latest"
   },
   "repository": {
     "type": "git",

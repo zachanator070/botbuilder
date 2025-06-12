@@ -8,7 +8,7 @@
     "clean": "rm -rf app/build server/build",
     "start-dev": "docker compose up dev-ui dev-server",
     "build": "docker compose build prod-ui && docker compose run prod-ui && docker compose build prod-server",
-    "publish": "docker tag botbuilder-prod-server zachanator070/botbuilder:latest && docker login -u=\"$(DOCKER_USERNAME)\" -p=\"$(DOCKER_PASSWORD)\" && docker push zachanator070/botbuilder:latest"
+    "publish": "docker tag botbuilder-prod-server zachanator070/botbuilder:latest && docker login -u=\"${DOCKER_USERNAME}\" -p=\"${DOCKER_PASSWORD}\" && docker push zachanator070/botbuilder:latest"
   },
   "repository": {
     "type": "git",

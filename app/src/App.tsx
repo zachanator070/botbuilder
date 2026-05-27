@@ -1,8 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router";
 import MainMenu from "./MainMenu";
-import RunMap from "./RunMap";
-import Battle from "./Battle";
+import RunMap from "./run/RunMap";
+import Battle from "./battle/Battle";
 
 export default function App(): React.ReactElement {
     return <div>
